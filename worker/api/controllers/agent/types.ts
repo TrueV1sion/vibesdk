@@ -1,11 +1,12 @@
 import { PreviewType } from "../../../services/sandbox/sandboxTypes";
+import type { AgentMode } from "../../../agents/core/state";
 
 export interface CodeGenArgs {
     query: string;
     language?: string;
     frameworks?: string[];
     selectedTemplate?: string;
-    agentMode: 'deterministic' | 'smart';
+    agentMode: AgentMode;
 }
 
 /**
@@ -18,4 +19,6 @@ export interface AgentConnectionData {
 
 export interface AgentPreviewResponse extends PreviewType {
 }
+
+export type { AgentMode };
     

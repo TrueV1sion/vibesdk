@@ -1,3 +1,15 @@
+Design a self-serve enterprise pricing lab that supports plan simulations, ROI calculators, persona-specific onboarding flows, and exports enriched leads to HubSpot and Salesforce.
+
+Create a multi-tenant customer success war room with health scoring dashboards, renewal playbooks, upsell opportunity tracking, and automated outreach sequences.
+
+Build a partner revenue command center that handles co-marketing asset distribution, deal registration, MDF tracking, and pipeline attribution with granular analytics.
+
+Design a virtual-first clinic operations cockpit that manages digital intake, symptom triage, clinician scheduling, HIPAA-compliant messaging, and automated care-plan nudges connected to our Athenahealth instance.
+
+Create a population health surveillance dashboard that ingests FHIR data, flags rising-risk cohorts, orchestrates outreach cadences, and tracks reimbursement-eligible RPM/CCM enrollments with payer-specific workflows.
+
+Build a CareOps marketplace where specialists can publish virtual programs, manage licensure compliance, handle claims/billing, and deliver telehealth sessions with secure document exchange and outcome reporting.
+
 Please build a chatgpt clone for me with a beautiful UI, sidebar, ability to save and retrieve previous conversations, choose between various models etc. It should be able to use tools. Use Cloudflare agents to build it
 
 Build a game where I see a map with circles on cities. Each city is a cloudflare datacenter. The map shows with data centres highlighted for 20 seconds, and after that, we show grayed out circles in multiple regions. The user's goal is to remember and click as many regions as they can in 20 seconds and get points based on that

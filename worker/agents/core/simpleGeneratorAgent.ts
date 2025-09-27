@@ -9,7 +9,7 @@ import {
 } from '../schemas';
 import { GitHubPushRequest, PreviewType, StaticAnalysisResponse, TemplateDetails } from '../../services/sandbox/sandboxTypes';
 import {  GitHubExportResult } from '../../services/github/types';
-import { CodeGenState, CurrentDevState, MAX_PHASES, FileState } from './state';
+import { CodeGenState, CurrentDevState, MAX_PHASES, FileState, AgentMode } from './state';
 import { AllIssues, AgentSummary, ScreenshotData, AgentInitArgs } from './types';
 import { WebSocketMessageResponses } from '../constants';
 import { broadcastToConnections, handleWebSocketClose, handleWebSocketMessage } from './websocket';
@@ -261,7 +261,7 @@ export class SimpleCodeGeneratorAgent extends Agent<Env, CodeGenState> {
      */
     async initialize(
         initArgs: AgentInitArgs,
-        ..._args: unknown[]
+        agentMode: AgentMode = 'deterministic'
     ): Promise<CodeGenState> {
 
         const { query, language, frameworks, hostname, inferenceContext, templateInfo, sandboxSessionId } = initArgs;
@@ -277,6 +277,7 @@ export class SimpleCodeGeneratorAgent extends Agent<Env, CodeGenState> {
             frameworks: frameworks!,
             templateDetails: templateInfo.templateDetails,
             templateMetaInfo: templateInfo.selection,
+            agentMode,
             stream: {
                 chunk_size: 256,
                 onChunk: (chunk) => {
@@ -291,6 +292,7 @@ export class SimpleCodeGeneratorAgent extends Agent<Env, CodeGenState> {
         
         this.setState({
             ...this.initialState,
+            agentMode,
             query,
             blueprint,
             templateDetails: templateInfo.templateDetails,

@@ -1,10 +1,15 @@
-import type { Blueprint, ClientReportedErrorType, PhaseConceptType ,
+import type {
+    Blueprint,
+    ClientReportedErrorType,
+    PhaseConceptType,
     FileOutputType,
 } from '../schemas';
 import type { TemplateDetails } from '../../services/sandbox/sandboxTypes';
 // import type { ScreenshotData } from './types';
 import type { ConversationMessage } from '../inferutils/common';
 import type { InferenceContext } from '../inferutils/config.types';
+
+export type AgentMode = 'deterministic' | 'smart' | 'revenue' | 'healthcare';
 
 export interface FileState extends FileOutputType {
     last_hash: string;
@@ -44,7 +49,7 @@ export interface CodeGenState {
     // latestScreenshot?: ScreenshotData; // Store captured screenshot
     shouldBeGenerating: boolean; // Persistent flag indicating generation should be active
     mvpGenerated: boolean;
-    agentMode: 'deterministic' | 'smart';
+    agentMode: AgentMode;
     sessionId: string;
     hostname: string;
     phasesCounter: number;

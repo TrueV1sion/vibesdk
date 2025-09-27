@@ -4,6 +4,7 @@ import { generateId } from '../../../utils/idGenerator';
 import { CodeGenState } from '../../../agents/core/state';
 import { getAgentStub, getTemplateForQuery } from '../../../agents';
 import { AgentConnectionData, AgentPreviewResponse, CodeGenArgs } from './types';
+import type { AgentMode } from '../../../agents/core/state';
 import { ApiResponse, ControllerResponse } from '../types';
 import { RouteContext } from '../../types/route-context';
 import { ModelConfigService } from '../../../database';
@@ -123,6 +124,12 @@ export class CodingAgentController extends BaseController {
                 }
             });
 
+            const allowedAgentModes: AgentMode[] = ['deterministic', 'smart', 'revenue', 'healthcare'];
+            const requestedMode = body.agentMode;
+            const resolvedAgentMode: AgentMode = allowedAgentModes.includes(requestedMode as AgentMode)
+                ? requestedMode as AgentMode
+                : defaultCodeGenArgs.agentMode;
+
             const agentPromise = agentInstance.initialize({
                 query,
                 language: body.language || defaultCodeGenArgs.language,
@@ -134,7 +141,7 @@ export class CodingAgentController extends BaseController {
                 },
                 templateInfo: { templateDetails, selection },
                 sandboxSessionId
-            }, body.agentMode || defaultCodeGenArgs.agentMode) as Promise<CodeGenState>;
+            }, resolvedAgentMode) as Promise<CodeGenState>;
             agentPromise.then(async (_state: CodeGenState) => {
                 writer.write("terminate");
                 writer.close();

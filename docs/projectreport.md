@@ -44,7 +44,7 @@ Orange Build v2.0 represents a complete architectural modernization, migrating f
 
 ### III. AI Agent Orchestration System
 
-Orange Build employs a sophisticated multi-agent architecture with two operational modes:
+Orange Build employs a sophisticated multi-agent architecture with three operational modes:
 
 #### Agent Operational Modes:
 
@@ -59,6 +59,18 @@ Orange Build employs a sophisticated multi-agent architecture with two operation
 - Dynamic workflow adaptation based on project context and user interactions
 - Advanced conversational capabilities with natural language processing
 - Optimal for iterative development and user-guided refinements
+
+**3. Revenue Mode (`agentMode: 'revenue'`)**
+- Extends deterministic generation with monetization-specific planning directives
+- Injects pricing labs, lifecycle automation, analytics instrumentation, and GTM experiments directly into blueprints
+- Prioritizes integrations with CRM, billing, and product analytics systems to accelerate revenue ops deployments
+- Ideal for growth, RevOps, and agency teams packaging repeatable revenue playbooks
+
+**4. CareOps Mode (`agentMode: 'healthcare'`)**
+- Adds a healthcare-specific directive that enforces HIPAA compliance, consent capture, audit trails, and role-based controls.
+- Guides blueprints to outline HL7/FHIR integrations, telehealth experiences, claims/billing handoffs, and safety checklists.
+- Highlights reimbursable RPM/CCM programs, employer/payer portals, and concierge add-ons to unlock healthcare revenue streams.
+- Tailors the home experience and prompt packs toward clinics, MSOs, and digital health startups needing operational rigor.
 
 #### Core Agent Classes:
 

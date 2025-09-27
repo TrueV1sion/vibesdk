@@ -1,5 +1,5 @@
 import { SimpleCodeGeneratorAgent } from "./simpleGeneratorAgent";
-import { CodeGenState } from "./state";
+import { CodeGenState, AgentMode } from "./state";
 import { AgentInitArgs } from "./types";
 
 /**
@@ -15,7 +15,7 @@ export class SmartCodeGeneratorAgent extends SimpleCodeGeneratorAgent {
      */
     async initialize(
         initArgs: AgentInitArgs,
-        agentMode: 'deterministic' | 'smart'
+        agentMode: AgentMode
     ): Promise<CodeGenState> {
         this.logger().info('🧠 Initializing SmartCodeGeneratorAgent with enhanced AI orchestration', {
             queryLength: initArgs.query.length,
@@ -23,15 +23,14 @@ export class SmartCodeGeneratorAgent extends SimpleCodeGeneratorAgent {
         });
 
         // Call the parent initialization
-        return await super.initialize(initArgs);
+        return await super.initialize(initArgs, agentMode);
     }
 
     async generateAllFiles(reviewCycles: number = 10): Promise<void> {
-        if (this.state.agentMode === 'deterministic') {
-            return super.generateAllFiles(reviewCycles);
-        } else {
+        if (this.state.agentMode === 'smart') {
             return this.builderLoop();
         }
+        return super.generateAllFiles(reviewCycles);
     }
 
     async builderLoop() {

@@ -39,12 +39,18 @@ Let your customers extend your product's functionality without learning your API
 
 ### 🎯 Key Features
 
-🤖 **AI Code Generation** – Phase-wise development with intelligent error correction  
-⚡ **Live Previews** – App previews running in sandboxed containers  
-💬 **Interactive Chat** – Guide development through natural conversation  
-📱 **Modern Stack** – Generates React + TypeScript + Tailwind apps  
-🚀 **One-Click Deploy** – Deploy generated apps to Workers for Platforms  
-📦 **GitHub Integration** – Export code directly to your repositories  
+🤖 **AI Code Generation** – Phase-wise development with intelligent error correction
+⚡ **Live Previews** – App previews running in sandboxed containers
+💬 **Interactive Chat** – Guide development through natural conversation
+📱 **Modern Stack** – Generates React + TypeScript + Tailwind apps
+🚀 **One-Click Deploy** – Deploy generated apps to Workers for Platforms
+📦 **GitHub Integration** – Export code directly to your repositories
+💰 **Revenue Mode** – Purpose-built agent orchestration that produces monetization-ready apps with pricing labs, funnel analytics, lifecycle automation, and CRM/billing integrations out of the box
+🩺 **CareOps Mode** – Healthcare-specific directives that bake in HIPAA compliance, clinical workflows, FHIR integrations, and reimbursable program design for digital care offerings
+
+👉 Explore the [Revenue Mode playbook](docs/revenue-mode.md) to see how to turn VibeSDK into a high-velocity revenue platform.
+
+🩺 Dive into the [CareOps Mode playbook](docs/healthcare-mode.md) to package regulated healthcare experiences with monetization hooks.
 
 ### 🏗️ Built on Cloudflare's Platform
 

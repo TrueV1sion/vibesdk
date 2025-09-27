@@ -73,6 +73,14 @@ Reasoning: "Social template provides user interactions, content sharing, and com
 - **Illustrative**: Rich graphics and visual storytelling
 - **Kid_Playful**: Colorful, fun, child-friendly interfaces
 
+## REVENUE ENABLEMENT FLAG:
+- When the user emphasises monetization, pricing, revenue operations, GTM funnels, or customer lifecycle tooling, set useCase to 'Revenue Enablement'.
+- Prefer templates suited for dashboards or SaaS marketing surfaces when Revenue Enablement is chosen.
+
+## HEALTHCARE OPERATIONS FLAG:
+- When the user focuses on patients, clinicians, care coordination, HIPAA/compliance, scheduling, triage, telehealth, or population health, set useCase to 'Healthcare Operations'.
+- Prefer templates that support secure portals, operational dashboards, or workflow management when Healthcare Operations is selected.
+
 ## RULES:
 - ALWAYS select a template (never return null)
 - Ignore misleading template names - analyze actual features

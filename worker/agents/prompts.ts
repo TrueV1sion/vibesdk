@@ -1087,11 +1087,35 @@ const ECOMM_INSTRUCTIONS = (): string => `
 const DASHBOARD_INSTRUCTIONS = (): string => `
 ** If applicable to user query group Related Controls and Forms into Well-Labeled Cards / Panels
 ** If applicable to user query offer Quick Actions / Shortcuts for Common Tasks
-** If user asked for analytics/visualizations/statistics - Show sparklines, mini line/bar charts, or simple pie indicators for trends 
+** If user asked for analytics/visualizations/statistics - Show sparklines, mini line/bar charts, or simple pie indicators for trends
 ** If user asked for analytics/visualizations/statistics - Maybe show key metrics in modular cards
 ** If applicable to user query make It Interactive and Contextual (Filters, Search, Pagination)
 ** If applicable to user query add a sidebar and or tabs
 ** Dashboard should be information dense.
+`;
+
+const REVENUE_ENABLEMENT_INSTRUCTIONS = (style: TemplateSelection['styleSelection']): string => `
+** Build a monetization-centric experience. Include pricing tier cards, plan comparison tables, ROI calculators, and clear upgrade CTAs.
+** Provide conversion funnels, experiment toggles, retention health indicators, and lifecycle automation panels. Instrument the UI for analytics events.
+** Include sections for sales-assisted workflows (demo booking, contract review), customer success playbooks, and partner/agency enablement if relevant.
+** Call out integration surfaces for CRM, billing, product analytics, and marketing automation with explicit data schema guidance.
+** Ensure copy blocks highlight value propositions, proof assets, objection handling, and tailored messaging per buyer persona.
+** Support localization and packaging experiments with configurable modules or toggles.
+
+Use the following artistic style to maintain polish:
+${getStyleInstructions(style)}
+`;
+
+const HEALTHCARE_OPERATIONS_INSTRUCTIONS = (style: TemplateSelection['styleSelection']): string => `
+** Design for regulated care delivery. Include consent capture, role-based access, audit trails, and PHI-safe data handling patterns throughout the UI.
+** Map patient and clinician journeys end-to-end—intake, triage, visit prep, care plan tracking, follow-ups, and escalation—with clear status indicators.
+** Provide integrations or data exchange modules for EHR/FHIR, telehealth, secure messaging, insurance eligibility, and medical devices with schema notes.
+** Surface operational intelligence dashboards (capacity, readmission risk, satisfaction, reimbursement) and alerting panels for compliance or SLA breaches.
+** Offer monetization pathways like reimbursable virtual care programs, employer or payer portals, premium concierge tiers, or marketplace add-ons.
+** Prioritize accessibility, localization, and trust signals (certifications, clinician bios, outcome metrics) to build confidence across patient populations.
+
+Use the following artistic style to maintain polish:
+${getStyleInstructions(style)}
 `;
 
 export const getUsecaseSpecificInstructions = (selectedTemplate: TemplateSelection): string => {
@@ -1102,6 +1126,10 @@ export const getUsecaseSpecificInstructions = (selectedTemplate: TemplateSelecti
             return ECOMM_INSTRUCTIONS();
         case 'Dashboard':
             return DASHBOARD_INSTRUCTIONS();
+        case 'Revenue Enablement':
+            return REVENUE_ENABLEMENT_INSTRUCTIONS(selectedTemplate.styleSelection);
+        case 'Healthcare Operations':
+            return HEALTHCARE_OPERATIONS_INSTRUCTIONS(selectedTemplate.styleSelection);
         default:
             return `Use the following artistic style:
             ${getStyleInstructions(selectedTemplate.styleSelection)}`;
