@@ -1,4 +1,4 @@
-import { Zap } from 'lucide-react';
+import { Zap, Coins, Stethoscope } from 'lucide-react';
 import { type AgentMode } from './agent-mode-toggle';
 
 interface AgentModeDisplayProps {
@@ -12,12 +12,25 @@ export function AgentModeDisplay({
 }: AgentModeDisplayProps) {
   return (
     <div className={`flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 dark:bg-slate-800/50 rounded-md border border-slate-200 dark:border-slate-700 ${className}`}>
-      {mode === 'smart' ? (
+      {mode === 'smart' && (
         <>
           <Zap className="size-2.5 text-violet-500" />
           <span className="text-xs font-medium text-violet-700 dark:text-violet-400">Smart</span>
         </>
-      ) : (
+      )}
+      {mode === 'revenue' && (
+        <>
+          <Coins className="size-2.5 text-amber-500" />
+          <span className="text-xs font-medium text-amber-700 dark:text-amber-400">Revenue</span>
+        </>
+      )}
+      {mode === 'healthcare' && (
+        <>
+          <Stethoscope className="size-2.5 text-sky-500" />
+          <span className="text-xs font-medium text-sky-700 dark:text-sky-400">CareOps</span>
+        </>
+      )}
+      {mode === 'deterministic' && (
         <>
           <div className="size-1.5 rounded-full bg-emerald-500" />
           <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">Reliable</span>

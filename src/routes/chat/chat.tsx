@@ -27,6 +27,7 @@ import { useFileContentStream } from './hooks/use-file-content-stream';
 import { logger } from '@/utils/logger';
 import { useApp } from '@/hooks/use-app';
 import { AgentModeDisplay } from '@/components/agent-mode-display';
+import type { AgentMode } from '@/components/agent-mode-toggle';
 import { useGitHubExport } from '@/hooks/use-github-export';
 import { GitHubExportModal } from '@/components/github-export-modal';
 import { ModelConfigInfo } from './components/model-config-info';
@@ -35,9 +36,12 @@ import { useAutoScroll } from '@/hooks/use-auto-scroll';
 export default function Chat() {
 	const { chatId: urlChatId } = useParams();
 
-	const [searchParams] = useSearchParams();
-	const userQuery = searchParams.get('query');
-	const agentMode = searchParams.get('agentMode') || 'deterministic';
+        const [searchParams] = useSearchParams();
+        const userQuery = searchParams.get('query');
+        const agentModeParam = searchParams.get('agentMode');
+        const isAgentMode = (value: string | null): value is AgentMode =>
+                value === 'deterministic' || value === 'smart' || value === 'revenue' || value === 'healthcare';
+        const agentMode: AgentMode = isAgentMode(agentModeParam) ? agentModeParam : 'deterministic';
 
 	// Load existing app data if chatId is provided
 	const { app, loading: appLoading } = useApp(urlChatId);
@@ -113,12 +117,12 @@ export default function Chat() {
 		shouldRefreshPreview,
 		// Preview deployment state
 		isPreviewDeploying,
-	} = useChat({
-		chatId: urlChatId,
-		query: userQuery,
-		agentMode: agentMode as 'deterministic' | 'smart',
-		onDebugMessage: addDebugMessage,
-	});
+        } = useChat({
+                chatId: urlChatId,
+                query: userQuery,
+                agentMode,
+                onDebugMessage: addDebugMessage,
+        });
 
 	// GitHub export functionality - use urlChatId directly from URL params
 	const githubExport = useGitHubExport(websocket, urlChatId);
@@ -488,13 +492,7 @@ export default function Chat() {
 									{import.meta.env
 										.VITE_AGENT_MODE_ENABLED && (
 										<div className="flex justify-between items-center py-2 border-b border-border-primary/50 mb-4">
-											<AgentModeDisplay
-												mode={
-													agentMode as
-														| 'deterministic'
-														| 'smart'
-												}
-											/>
+                                                                                        <AgentModeDisplay mode={agentMode} />
 										</div>
 									)}
 								</>

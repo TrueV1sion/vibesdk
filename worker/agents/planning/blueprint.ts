@@ -5,6 +5,7 @@ import { Blueprint, BlueprintSchema, TemplateSelection } from '../schemas';
 import { createLogger } from '../../logger';
 import { createSystemMessage, createUserMessage } from '../inferutils/common';
 import { InferenceContext } from '../inferutils/config.types';
+import type { AgentMode } from '../core/state';
 
 const logger = createLogger('Blueprint');
 
@@ -131,6 +132,35 @@ Preinstalled dependencies:
 {{dependencies}}
 </STARTING TEMPLATE>`;
 
+const REVENUE_MODE_DIRECTIVE = `
+<MODE>
+    ## Revenue Engine Charter
+    • Treat this build as a revenue-critical application. Translate vague prompts into comprehensive monetization systems that cover pricing experimentation, lead capture, onboarding, retention, and expansion.
+    • Blueprints MUST detail recurring revenue mechanics: pricing tiers, plan upgrade paths, trial or credit workflows, billing compliance messaging, and revenue assurance safeguards.
+    • Require analytics-ready instrumentation: conversion funnels, CAC/LTV dashboards, cohort tracking, and experiment toggles with clear success metrics.
+    • Specify integrations for CRM/sales handoff, subscription billing, customer success, product analytics, and marketing automation with explicit data contracts.
+    • Map lifecycle automation including onboarding tours, milestone nudges, renewal/expansion playbooks, partner enablement, and account health scoring.
+    • Provide messaging frameworks that include differentiated value props, objection handling, proof assets, and personalization hooks for each buyer segment.
+    • Highlight how the experience supports GTM experimentation (A/B paywall variants, localized offers, usage-based packaging) across self-serve and sales-assisted journeys.
+</MODE>`;
+
+const HEALTHCARE_MODE_DIRECTIVE = `
+<MODE>
+    ## CareOps Delivery Charter
+    • Assume the experience is mission-critical for clinical operations or patient engagement. Translate prompts into workflows that reduce care team toil while elevating patient outcomes.
+    • Require explicit guardrails for HIPAA compliance, consent capture, PHI handling, audit trails, and role-based access across staff, clinicians, and administrators.
+    • Specify integrations with EHR/EMR systems (HL7/FHIR), telehealth platforms, secure messaging, claims/billing, and medical device data—with schemas and sync cadences.
+    • Design patient journeys end-to-end: intake, triage, scheduling, care plan management, follow-up nudges, and population health analytics. Include multilingual and accessibility considerations.
+    • Provide clinical safety nets such as escalation paths, symptom checking decision trees, verification checkpoints, and documentation templates aligned to regulatory codes.
+    • Map monetization levers suited for care delivery: reimbursable programs (RPM/CCM), membership tiers, employer contracts, marketplace listings, or premium concierge add-ons.
+    • Deliver operational intelligence dashboards for throughput, readmission risk, satisfaction, and reimbursement rates with alerts for SLA breaches or compliance anomalies.
+</MODE>`;
+
+const MODE_DIRECTIVES: Partial<Record<AgentMode, string>> = {
+    revenue: REVENUE_MODE_DIRECTIVE,
+    healthcare: HEALTHCARE_MODE_DIRECTIVE,
+};
+
 // const USER_PROMPT = ``;
 
 // const OPTIMIZED_USER_PROMPT = `Developer: # Role
@@ -231,6 +261,7 @@ export interface BlueprintGenerationArgs {
     // Add optional template info
     templateDetails: TemplateDetails;
     templateMetaInfo: TemplateSelection;
+    agentMode: AgentMode;
     stream?: {
         chunk_size: number;
         onChunk: (chunk: string) => void;
@@ -241,7 +272,7 @@ export interface BlueprintGenerationArgs {
  * Generate a blueprint for the application based on user prompt
  */
 // Update function signature and system prompt
-export async function generateBlueprint({ env, inferenceContext, query, language, frameworks, templateDetails, templateMetaInfo, stream }: BlueprintGenerationArgs): Promise<Blueprint> {
+export async function generateBlueprint({ env, inferenceContext, query, language, frameworks, templateDetails, templateMetaInfo, agentMode, stream }: BlueprintGenerationArgs): Promise<Blueprint> {
     try {
         logger.info("Generating application blueprint", { query, queryLength: query.length });
         logger.info(templateDetails ? `Using template: ${templateDetails.name}` : "Not using a template.");
@@ -250,7 +281,10 @@ export async function generateBlueprint({ env, inferenceContext, query, language
         // Build the SYSTEM prompt for blueprint generation
         // ---------------------------------------------------------------------------
 
-        const systemPrompt = createSystemMessage(generalSystemPromptBuilder(SYSTEM_PROMPT, {
+        const modeDirective = agentMode ? MODE_DIRECTIVES[agentMode] : undefined;
+        const promptBase = modeDirective ? `${SYSTEM_PROMPT}\n${modeDirective}` : SYSTEM_PROMPT;
+
+        const systemPrompt = createSystemMessage(generalSystemPromptBuilder(promptBase, {
             query,
             templateDetails,
             frameworks,

@@ -2,9 +2,9 @@ import { WebSocket } from 'partysocket';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     RateLimitExceededError,
-	type BlueprintType,
-	type WebSocketMessage,
-	type CodeFixEdits} from '@/api-types';
+        type BlueprintType,
+        type WebSocketMessage,
+        type CodeFixEdits} from '@/api-types';
 import {
 	createRepairingJSONParser,
 	ndjsonStream,
@@ -18,6 +18,7 @@ import { isConversationalMessage, addOrUpdateMessage, createUserMessage, handleR
 import { sendWebSocketMessage } from '../utils/websocket-helpers';
 import { initialStages as defaultStages, updateStage as updateStageHelper } from '../utils/project-stage-helpers';
 import type { ProjectStage } from '../utils/project-stage-helpers';
+import type { AgentMode } from '@/components/agent-mode-toggle';
 
 export interface FileType {
 	filePath: string;
@@ -45,15 +46,15 @@ export interface PhaseTimelineItem {
 }
 
 export function useChat({
-	chatId: urlChatId,
-	query: userQuery,
-	agentMode = 'deterministic',
-	onDebugMessage,
-	onTerminalMessage,
+        chatId: urlChatId,
+        query: userQuery,
+        agentMode = 'deterministic',
+        onDebugMessage,
+        onTerminalMessage,
 }: {
-	chatId?: string;
-	query: string | null;
-	agentMode?: 'deterministic' | 'smart';
+        chatId?: string;
+        query: string | null;
+        agentMode?: AgentMode;
 	onDebugMessage?: (type: 'error' | 'warning' | 'info' | 'websocket', message: string, details?: string, source?: string, messageType?: string, rawMessage?: unknown) => void;
 	onTerminalMessage?: (log: { id: string; content: string; type: 'command' | 'stdout' | 'stderr' | 'info' | 'error' | 'warn' | 'debug'; timestamp: number; source?: string }) => void;
 }) {
@@ -100,7 +101,7 @@ export function useChat({
 	const [isPreviewDeploying, setIsPreviewDeploying] = useState(false);
 	
 	// Redeployment state - tracks when redeploy button should be enabled
-	const [isRedeployReady, setIsRedeployReady] = useState(false);
+        const [isRedeployReady, setIsRedeployReady] = useState(false);
 	// const [lastDeploymentPhaseCount, setLastDeploymentPhaseCount] = useState(0);
 	const [isGenerationPaused, setIsGenerationPaused] = useState(false);
 	const [isGenerating, setIsGenerating] = useState(false);

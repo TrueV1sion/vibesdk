@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Zap, Settings } from 'lucide-react';
+import { Zap, Settings, Coins, Stethoscope } from 'lucide-react';
+import type { AgentMode as ApiAgentMode } from '@/api-types';
 
-export type AgentMode = 'deterministic' | 'smart';
+export type AgentMode = ApiAgentMode;
 
 interface AgentModeToggleProps {
   value: AgentMode;
@@ -54,14 +55,48 @@ export function AgentModeToggle({ value, onChange, disabled = false, className =
             } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
             <Zap className={`size-2.5 ${
-              value === 'smart' 
-                ? 'text-violet-500' 
+              value === 'smart'
+                ? 'text-violet-500'
                 : 'text-slate-400 dark:text-slate-500'
             }`} />
             Smart
           </button>
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => onChange('revenue')}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+              value === 'revenue'
+                ? 'bg-white dark:bg-slate-700 shadow-sm text-amber-700 dark:text-amber-400 border border-slate-200 dark:border-slate-600'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+            } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+          >
+            <Coins className={`size-2.5 ${
+              value === 'revenue'
+                ? 'text-amber-500'
+                : 'text-slate-400 dark:text-slate-500'
+            }`} />
+            Revenue
+          </button>
+          <button
+            type="button"
+            disabled={disabled}
+            onClick={() => onChange('healthcare')}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+              value === 'healthcare'
+                ? 'bg-white dark:bg-slate-700 shadow-sm text-sky-700 dark:text-sky-400 border border-slate-200 dark:border-slate-600'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+            } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+          >
+            <Stethoscope className={`size-2.5 ${
+              value === 'healthcare'
+                ? 'text-sky-500'
+                : 'text-slate-400 dark:text-slate-500'
+            }`} />
+            CareOps
+          </button>
         </div>
-        
+
         {/* Tooltip */}
         {showTooltip && (
           <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full pointer-events-none transition-opacity duration-200 z-50">
@@ -76,6 +111,16 @@ export function AgentModeToggle({ value, onChange, disabled = false, className =
                   <Zap className="size-3 text-violet-400" />
                   <span className="font-medium text-violet-300">Smart:</span>
                   <span className="text-slate-300">AI-orchestrated & adaptive</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Coins className="size-3 text-amber-400" />
+                  <span className="font-medium text-amber-300">Revenue:</span>
+                  <span className="text-slate-300">Monetization-focused product strategy</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Stethoscope className="size-3 text-sky-400" />
+                  <span className="font-medium text-sky-300">CareOps:</span>
+                  <span className="text-slate-300">Healthcare-grade workflows & compliance</span>
                 </div>
               </div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-slate-700"></div>
